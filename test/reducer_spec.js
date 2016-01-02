@@ -19,8 +19,8 @@ describe('reducer', () => {
 		const nextState = reducer(state, action);
 
 		expect(nextState).to.equal(fromJS({
-			votes: {
-				pairs: ["1", "2"]
+			vote: {
+				pair: ["1", "2"]
 			},
 			entries: []
 		}));
@@ -28,8 +28,8 @@ describe('reducer', () => {
 
 	it ('should handle vote', () => {
 		const state = fromJS({
-			votes: {
-				pairs: ["1", "2"]
+			vote: {
+				pair: ["1", "2"]
 			},
 			entries: []
 		});
@@ -38,8 +38,8 @@ describe('reducer', () => {
 		const nextState = reducer(state, action);
 
 		expect(nextState).to.equal(fromJS({
-			votes: {
-				pairs: ["1", "2"],
+			vote: {
+				pair: ["1", "2"],
 				tally: {
 					"1": 1
 				}

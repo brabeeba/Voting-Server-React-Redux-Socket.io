@@ -6,11 +6,11 @@ export function setEntries(state, entries) {
 	return state.set("entries", List(entries));
 }
 
-function getWinners(votes) {
-	if (!votes) return [];
-	const [a, b] = votes.get('pairs');
-	const aVote = votes.getIn(['tally', a], 0);
-	const bVote = votes.getIn(['tally', b], 0);
+function getWinners(vote) {
+	if (!vote) return [];
+	const [a, b] = vote.get('pair');
+	const aVote = vote.getIn(['tally', a], 0);
+	const bVote = vote.getIn(['tally', b], 0);
 	if (aVote > bVote) return [a];
 	if (bVote > aVote) return [b];
 	if (aVote == bVote) return [a, b];
@@ -19,12 +19,12 @@ function getWinners(votes) {
 }
 
 export function next(state) {
-	const entries = state.get('entries').concat(getWinners(state.get('votes')));
+	const entries = state.get('entries').concat(getWinners(state.get('vote')));
 
 	if (entries.size === 1) {
-		return state.remove('votes').remove('entries').set('winner', entries.first());
+		return state.remove('vote').remove('entries').set('winner', entries.first());
 	} else {
-		return state.merge({votes: Map({pairs: entries.take(2)}), entries: entries.skip(2)});
+		return state.merge({vote: Map({pair: entries.take(2)}), entries: entries.skip(2)});
 	}
 
 	
